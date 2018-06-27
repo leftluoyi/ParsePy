@@ -118,7 +118,6 @@ class ParseBase(object):
                 data = data.encode('utf-8')
 
         headers = {
-            'Content-type': 'application/json',
             'X-Parse-Application-Id': app_id,
             'X-Parse-REST-API-Key': rest_key
         }
@@ -133,6 +132,9 @@ class ParseBase(object):
             request.add_header('X-Parse-Session-Token', ACCESS_KEYS.get('session_token'))
         elif master_key:
             request.add_header('X-Parse-Master-Key', master_key)
+
+        if http_verb != 'GET':
+            request.add_header('Content-type', 'application/json')
 
         request.get_method = lambda: http_verb
 
